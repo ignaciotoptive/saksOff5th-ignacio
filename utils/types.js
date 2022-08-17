@@ -1,0 +1,28 @@
+// Type models enumerations
+const ROLE = {
+  MERCHANDISER: 'MERCHANDISER',
+  CUSTOMER: 'CUSTOMER',
+};
+
+const ADDRESS_TYPE = {
+  SHIPPING: 'SHIPPING',
+  BILLING: 'BILLING',
+};
+
+const CATEGORY = {
+  SHOES: 'SHOES',
+  PANTS: 'PANTS',
+  SHIRTS: 'SHIRTS',
+  HANDBAGS: 'HANDBAGS',
+  FURNITURE: 'FURNITURE',
+  TOYS: 'TOYS',
+  JEWELRY: 'JEWELRY',
+  WATCHES: 'WATCHES',
+  OTHER: 'OTHER',
+};
+
+export default {
+  ROLE,
+  ADDRESS_TYPE,
+  CATEGORY,
+};
