@@ -6,7 +6,10 @@
     "dev": "next dev -p 3666",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate": "sequelize-cli db:migrate",
+    "rollback": "sequelize-cli db:migrate:undo",
+    "seed": "sequelize-cli db:seed:all"
   },
   "dependencies": {
     "mysql2": "^2.3.3",
