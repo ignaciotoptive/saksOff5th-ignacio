@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/models": ["db/models/index.js"],
+      "@/models/*": ["db/models/*"],
+      "@/components/*": ["components/*"],
+      "@/api/*": ["pages/api/*"],
+      "@/services/*": ["services/*"],
+      "@/lib/*": ["lib/*"],
+      "@/utils/*": ["utils/*"],
+      "@/helpers/*": ["helpers/*"]
+    }
+  }
+}

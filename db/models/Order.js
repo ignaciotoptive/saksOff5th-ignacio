@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelize = require('../db/connection/database');
+const sequelize = require('../connection/database');
 
 const hooks = {
   beforeCreate(order) {
