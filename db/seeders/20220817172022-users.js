@@ -1,5 +1,5 @@
 'use strict';
-import { ROLE } from '../../utils/types';
+const { ROLE } = require('../../utils/types');
 
 // "password" hash generated with https://bcrypt-generator.com/
 const defaultPassword =

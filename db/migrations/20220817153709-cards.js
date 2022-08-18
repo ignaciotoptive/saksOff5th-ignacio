@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       expirationDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
       },
       name: {
         type: Sequelize.STRING,

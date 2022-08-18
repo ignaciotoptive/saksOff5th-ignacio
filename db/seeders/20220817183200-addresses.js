@@ -1,10 +1,10 @@
 'use strict';
-import { ADDRESS_TYPE } from '../../utils/types';
+const { ADDRESS_TYPE } = require('../../utils/types');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
     const users = await queryInterface.sequelize.query(
-      `SELECT id FROM users WHERE email='user1@email.com';`
+      `SELECT id FROM users WHERE email='user1@gmail.com';`
     );
 
     const user1 = users[0][0];

@@ -21,7 +21,7 @@ const CATEGORY = {
   OTHER: 'OTHER',
 };
 
-export default {
+module.exports = {
   ROLE,
   ADDRESS_TYPE,
   CATEGORY,
