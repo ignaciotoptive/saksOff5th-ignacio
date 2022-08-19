@@ -6,6 +6,7 @@
       "@/models/*": ["db/models/*"],
       "@/components/*": ["components/*"],
       "@/api/*": ["pages/api/*"],
+      "@/middleware": ["middleware/index.js"],
       "@/services/*": ["services/*"],
       "@/lib/*": ["lib/*"],
       "@/utils/*": ["utils/*"],
