@@ -2,6 +2,7 @@ import nc from 'next-connect';
 import db from '@/models';
 import middleware from '@/middleware';
 import { CATEGORY } from '@/utils/types';
+import { storeImage } from '@/utils/image';
 /**
  *  @swagger
  *  components:
@@ -90,7 +91,12 @@ import { CATEGORY } from '@/utils/types';
  *        schema:
  *          type: object
  */
-const handler = nc()
+const handler = nc({
+  onError: (err, req, res) => {
+    console.error(err);
+    res.status(500).send();
+  },
+})
   .use(middleware)
   .get(async (req, res) => {
     const { pageSize = 20, page = 0, category = '' } = req.query;
@@ -132,7 +138,18 @@ const handler = nc()
       isActive,
       category,
     });
-    // TODO: Save image(s)
+    if (req.files && req.files.image) {
+      const { url, width, height } = await storeImage({
+        imageFile: req.files.image,
+      });
+      const productId = product.id;
+      await db.Image.create({
+        url,
+        width,
+        height,
+        productId,
+      });
+    }
     return res.status(200).json({ product });
   });
 
