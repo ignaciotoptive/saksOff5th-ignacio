@@ -119,6 +119,9 @@ const handler = nc()
       isActive: isActive_ = false,
       category = CATEGORY.OTHER,
     } = req.body;
+    if (!SKU || !price) {
+      return res.status(400).send('Invalid SKU or price');
+    }
     const isActive = isActive_ == 'on' || isActive_;
     const product = await db.Product.create({
       SKU,
@@ -130,7 +133,14 @@ const handler = nc()
       category,
     });
     // TODO: Save image(s)
-    return res.status(200).send();
+    return res.status(200).json({ product });
   });
 
 export default handler;
+
+export const config = {
+  api: {
+    // Disable default bodyParser to use custom middleware
+    bodyParser: false,
+  },
+};
