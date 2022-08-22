@@ -4,6 +4,8 @@
     "paths": {
       "@/models": ["db/models/index.js"],
       "@/models/*": ["db/models/*"],
+      "@/store": ["store/index.js"],
+      "@/store/*": ["store/*"],
       "@/components/*": ["components/*"],
       "@/api/*": ["pages/api/*"],
       "@/middleware": ["middleware/index.js"],

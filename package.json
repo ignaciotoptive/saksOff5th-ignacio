@@ -12,7 +12,9 @@
     "seed": "sequelize-cli db:seed:all"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.5",
     "aws-sdk": "^2.1199.0",
+    "axios": "^0.27.2",
     "bcrypt-nodejs": "^0.0.3",
     "cookies-next": "^2.1.1",
     "csv-parser": "^3.0.0",
@@ -22,9 +24,12 @@
     "mysql2": "^2.3.3",
     "next": "12.2.5",
     "next-connect": "^0.13.0",
+    "next-redux-wrapper": "^7.0.5",
     "next-swagger-doc": "^0.3.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.34.2",
+    "react-redux": "^8.0.2",
     "sequelize": "^6.21.3",
     "swagger-ui-react": "^4.14.0"
   },

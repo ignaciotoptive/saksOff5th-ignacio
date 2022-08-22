@@ -43,7 +43,12 @@ import authService from '@/services/auth.service';
  *         schema:
  *           type: object
  */
-const handler = nc()
+const handler = nc({
+  onError: (err, req, res) => {
+    console.error(err);
+    res.status(500).send();
+  },
+})
   .use(middleware)
   .post(async (req, res) => {
     const { email, password } = req.body;
