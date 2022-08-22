@@ -1,8 +1,10 @@
 import im from 'imagemagick';
 import crypto from 'crypto';
+import fs from 'fs';
+import s3service from '@/services/s3.service';
 import config from '../config';
 
-const DEFAULT_IMAGE_SIZE = 128;
+const DEFAULT_IMAGE_SIZE = 200;
 
 function resizeImage({
   sourcePath,
@@ -33,17 +35,23 @@ function storeImage({ imageFile }) {
   const sourcePath = imageFile.filepath;
   const imageName = crypto.randomBytes(8).toString('hex');
   const [fileExtension] = imageFile.originalFilename.split('.').slice(-1);
-  const storagePath = config.storagePathBase + `${imageName}.${fileExtension}`;
+  const imageFileName = `${imageName}.${fileExtension}`;
+  const storagePath = config.storagePathBase + imageFileName;
   return new Promise((resolve, reject) => {
     resizeImage({
       sourcePath,
       destinationPath: storagePath,
-      callback: (err) => {
+      callback: async (err) => {
         if (err) {
           return reject(err);
         }
-
-        const url = `http://${config.hostname}:${config.port}/${imageName}.${fileExtension}`;
+        const newFile = fs.readFileSync(storagePath);
+        const uploadImageService = new s3service();
+        const uploadedImage = await uploadImageService.upload({
+          buffer: newFile,
+          originalName: imageFileName,
+        });
+        const url = uploadedImage.Location;
         return resolve({
           url,
           width: DEFAULT_IMAGE_SIZE,

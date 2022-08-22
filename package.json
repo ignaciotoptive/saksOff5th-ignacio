@@ -12,6 +12,7 @@
     "seed": "sequelize-cli db:seed:all"
   },
   "dependencies": {
+    "aws-sdk": "^2.1199.0",
     "bcrypt-nodejs": "^0.0.3",
     "cookies-next": "^2.1.1",
     "csv-parser": "^3.0.0",
