@@ -3,6 +3,7 @@ import axios from 'axios';
 import Head from 'next/head';
 import Router from 'next/router';
 import { useForm } from 'react-hook-form';
+import Layout from '@/components/Layout';
 
 const Login = () => {
   const {
@@ -35,23 +36,28 @@ const Login = () => {
       </Head>
 
       <div className="space-y-8">
-        <h1 className="self-start text-xl">Login</h1>
+        <h1 className="text-center text-xl">Login</h1>
 
         <label className="flex flex-col" htmlFor="email">
           Email
-          <input type="text" {...register('email', { required: true })} />
+          <input
+            className="input input-bordered w-full max-w-xs"
+            type="text"
+            {...register('email', { required: true })}
+          />
         </label>
 
         <label className="flex flex-col" htmlFor="password">
           Password
           <input
+            className="input input-bordered w-full max-w-xs"
             type="password"
             {...register('password', { required: true })}
           />
         </label>
 
         <button
-          className="u-button"
+          className="btn w-64 rounded-ful"
           type="submit"
           disabled={Object.keys(errors).length > 0 || isLoading}
         >
@@ -64,4 +70,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Layout(Login);

@@ -4,7 +4,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { selectAuthState, setAuthState } from '@/store/authSlice';
 
 //source: https://cheatcode.co/tutorials/how-to-handle-authenticated-routes-with-next-js
-const authenticatedRoute = (Component = null, options = {}) => {
+function authenticatedRoute(Component = null, options = {}) {
   class AuthenticatedRoute extends React.Component {
     state = {
       loading: true,
@@ -32,6 +32,6 @@ const authenticatedRoute = (Component = null, options = {}) => {
   return connect((state) => ({
     isLoggedIn: state?.auth.authState,
   }))(AuthenticatedRoute);
-};
+}
 
 export default authenticatedRoute;
