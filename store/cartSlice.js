@@ -3,7 +3,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 
 // Initial state
 const initialState = {
-  products: [],
+  products: null,
 };
 
 // Actual Slice
@@ -15,12 +15,21 @@ export const cartSlice = createSlice({
   // which detects changes to a "draft state" and produces a brand new
   // immutable state based off those changes
   reducers: {
+    setProducts(state, action) {
+      const newProducts = action.payload;
+      state.products = newProducts;
+      localStorage.setItem('products', JSON.stringify(newProducts));
+    },
+
     addProduct(state, action) {
-      state.products = state.products.concat(action.payload);
+      const newProducts = (state.products || []).concat(action.payload);
+      state.products = newProducts;
+      localStorage.setItem('products', JSON.stringify(newProducts));
     },
 
     clearCart(state) {
       state.products = [];
+      localStorage.removeItem('products');
     },
 
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
@@ -35,7 +44,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addProduct, clearCart } = cartSlice.actions;
+export const { setProducts, addProduct, clearCart } = cartSlice.actions;
 
 export const selectProducts = (state) => state.cart.products;
 

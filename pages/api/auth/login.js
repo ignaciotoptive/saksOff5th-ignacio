@@ -72,7 +72,7 @@ const handler = nc({
         setCookie('access_token', token, {
           req,
           res,
-          httpOnly: true,
+          httpOnly: false,
         });
         return res.send();
       }

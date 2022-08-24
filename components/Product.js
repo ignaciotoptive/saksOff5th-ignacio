@@ -11,7 +11,7 @@ function Product({ product, disableActions }) {
   const dispatch = useDispatch();
   return (
     <div className="flex justify-center sm:py-4">
-      <div className="card card-side card-compact w-full sm:w-72 sm:flex-col bg-base-300 shadow-xl">
+      <div className="card card-side card-compact w-full sm:flex-col bg-base-300 shadow-xl">
         <figure>
           <ImageFallback
             width={image.width}

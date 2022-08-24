@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import Router from 'next/router';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, selectUser } from '@/store/authSlice';
 import CartIcon from '@/components/CartIcon';
+import { ROLE } from '@/utils/types';
+import authService from '@/services/auth.service';
 
 function Header(props) {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
+  useEffect(() => {
+    // Initialize user data from browser cookies
+    const token = getCookie('access_token');
+    if (!user && !!token) {
+      authService().verify(token, (err, user) => {
+        dispatch(setUser(user));
+      });
+    }
+  }, []);
+
   const onLogout = () => {
-    dispatch(setUser(null));
     axios.get('/api/auth/logout').then(() => {
+      dispatch(setUser(null));
       Router.push('/login');
     });
   };
@@ -27,7 +40,7 @@ function Header(props) {
       <div className="flex-none">
         {!!user && (
           <>
-            <CartIcon />
+            {user.role === ROLE.CUSTOMER && <CartIcon />}
             <button className="btn" onClick={onLogout}>
               Logout
             </button>

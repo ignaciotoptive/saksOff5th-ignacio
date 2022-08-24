@@ -1,23 +1,13 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
 import AuthenticatedRoute from '@/components/AuthenticatedRoute';
 import { userFromRequest } from '@/utils/auth';
 import Layout from '@/components/Layout';
 import ProductsList from '@/components/ProductsList';
-import { setUser } from '@/store/authSlice';
 import { getProductsList } from '@/utils/api';
 import { ROLE } from '@/utils/types';
 
 function Home({ user, products }) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(setUser(user));
-  }, [dispatch, user]);
-
   return (
     <div>
       <Head>

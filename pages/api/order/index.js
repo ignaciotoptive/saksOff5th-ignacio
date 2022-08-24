@@ -132,7 +132,6 @@ const handler = nc({
         },
         { transaction: t }
       );
-      console.log('Order created:', order.toJSON());
       await Promise.all(
         products.map(async (productId) => {
           await db.OrderProduct.create(

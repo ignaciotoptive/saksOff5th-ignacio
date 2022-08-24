@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
-import { selectProducts } from '@/store/cartSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectProducts, setProducts } from '@/store/cartSlice';
 
 function CartIcon() {
   const products = useSelector(selectProducts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Initialize products list from local storage
+    if (products == null) {
+      const savedProducts = JSON.parse(
+        localStorage.getItem('products') || '[]'
+      );
+      dispatch(setProducts(savedProducts));
+    }
+  }, []);
+
   return (
     <Link href="/checkout">
       <label className="btn btn-ghost btn-circle">
@@ -24,7 +36,7 @@ function CartIcon() {
             />
           </svg>
           <span className="badge badge-sm indicator-item text-info">
-            {products.length}
+            {products?.length}
           </span>
         </div>
       </label>
