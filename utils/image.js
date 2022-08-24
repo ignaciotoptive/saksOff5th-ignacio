@@ -13,7 +13,7 @@ function resizeImage({
   height = DEFAULT_IMAGE_SIZE,
   callback = () => null,
 }) {
-  im.resize(
+  im.crop(
     {
       srcPath: sourcePath,
       dstPath: destinationPath,

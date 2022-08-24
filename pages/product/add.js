@@ -67,7 +67,6 @@ function AddProduct() {
 
   const onSubmit = async (params) => {
     setIsLoading(true);
-    console.log('params', params);
     const formData = new FormData();
     forEach(params, (value, param) => {
       if (param === 'image') formData.append('image', params.image[0]);
@@ -111,6 +110,7 @@ function AddProduct() {
                   (field.type == 'checkbox' ? ' checkbox-sm' : '')
                 }
                 type={field.type}
+                {...(field.type == 'file' && { accept: 'image/*' })}
                 {...register(field.name, field.options)}
               />
             </div>
@@ -126,7 +126,7 @@ function AddProduct() {
         </button>
 
         {isError && (
-          <p className="text-error">User password combination not found</p>
+          <p className="text-error">New Product could not be created</p>
         )}
       </div>
     </form>
