@@ -37,7 +37,7 @@ Product.associate = function (db) {
     foreignKey: 'productId',
     onDelete: 'CASCADE',
   });
-  Product.hasMany(db.Order, {
+  Product.hasMany(db.OrderProduct, {
     foreignKey: 'productId',
     onDelete: 'CASCADE',
   });

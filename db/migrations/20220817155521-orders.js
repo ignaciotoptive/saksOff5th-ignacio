@@ -14,13 +14,6 @@ module.exports = {
       createdAt: {
         type: Sequelize.DATE,
       },
-      productId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'products',
-          key: 'id',
-        },
-      },
       userId: {
         type: Sequelize.INTEGER,
         references: {

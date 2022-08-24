@@ -1,4 +1,6 @@
 import nc from 'next-connect';
+import sumBy from 'lodash/sumBy';
+
 import db from '@/models';
 import middleware from '@/middleware';
 
@@ -9,19 +11,15 @@ import middleware from '@/middleware';
  *      Order:
  *        type: object
  *        required:
- *          - price
- *          - productId
+ *          - products
  *          - userId
  *        properties:
  *          id:
  *            type: integer
- *          price:
- *            type: number
- *            format: float
- *            example: 220.12
- *          productId:
- *            type: integer
- *            example: 5
+ *          products:
+ *            type: array
+ *            items:
+ *              type: integer
  *          userId:
  *            type: integer
  *            example: 1
@@ -68,7 +66,12 @@ import middleware from '@/middleware';
  *        schema:
  *          type: object
  */
-const handler = nc()
+const handler = nc({
+  onError: (err, req, res) => {
+    console.error(err);
+    res.status(500).send();
+  },
+})
   .use(middleware)
   .get(async (req, res) => {
     const orders = await db.Order.findAll();
@@ -78,8 +81,7 @@ const handler = nc()
   })
   .post(async (req, res) => {
     const {
-      price,
-      productId,
+      products,
       userId,
       paymentCardId = null,
       shippingAddressId = null,
@@ -115,22 +117,37 @@ const handler = nc()
         );
     }
 
+    const productsData = await Promise.all(
+      products.map((id) => db.Product.findByPk(id))
+    );
+
     // Create new order and decrement product inventory in a single transaction
-    await sequelize.transaction(async (t) => {
-      await db.Order.create(
+    await db.sequelize.transaction(async (t) => {
+      const order = await db.Order.create(
         {
-          price,
-          productId,
+          price: sumBy(productsData, 'price'),
           userId,
           paymentCardId: paymentCard.id,
           shippingAddressId: shippingAddress.id,
         },
         { transaction: t }
       );
-      return db.Product.decrement('inventory', {
-        where: { id: productId },
-        transaction: t,
-      });
+      console.log('Order created:', order.toJSON());
+      await Promise.all(
+        products.map(async (productId) => {
+          await db.OrderProduct.create(
+            {
+              orderId: order.id,
+              productId,
+            },
+            { transaction: t }
+          );
+          return db.Product.decrement('inventory', {
+            where: { id: productId },
+            transaction: t,
+          });
+        })
+      );
     });
 
     return res.status(200).send();

@@ -12,6 +12,7 @@ const db = {
   Card: require('./Card'),
   Image: require('./Image'),
   Order: require('./Order'),
+  OrderProduct: require('./OrderProduct'),
   Product: require('./Product'),
   User: require('./User'),
 };

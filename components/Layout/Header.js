@@ -1,8 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import Router from 'next/router';
+import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, selectUser } from '@/store/authSlice';
+import CartIcon from '@/components/CartIcon';
 
 function Header(props) {
   const dispatch = useDispatch();
@@ -18,15 +20,18 @@ function Header(props) {
   return (
     <div className="bg-base-300 webstore-header navbar">
       <div className="flex-1 mx-10">
-        <a href="/" className="text-2xl font-bold text-accent">
-          Webstore
-        </a>
+        <Link href="/">
+          <a className="text-2xl font-bold text-accent">Webstore</a>
+        </Link>
       </div>
       <div className="flex-none">
         {!!user && (
-          <button className="btn" onClick={onLogout}>
-            Logout
-          </button>
+          <>
+            <CartIcon />
+            <button className="btn" onClick={onLogout}>
+              Logout
+            </button>
+          </>
         )}
       </div>
     </div>

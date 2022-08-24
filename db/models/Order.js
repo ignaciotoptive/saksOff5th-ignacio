@@ -28,16 +28,16 @@ Order.associate = function (db) {
     foreignKey: 'userId',
     onDelete: 'CASCADE',
   });
-  Order.belongsTo(db.Product, {
-    foreignKey: 'productId',
-    onDelete: 'CASCADE',
-  });
   Order.belongsTo(db.Card, {
     foreignKey: 'paymentCardId',
     onDelete: 'CASCADE',
   });
   Order.belongsTo(db.Address, {
     foreignKey: 'shippingAddressId',
+    onDelete: 'CASCADE',
+  });
+  Order.hasMany(db.OrderProduct, {
+    foreignKey: 'orderId',
     onDelete: 'CASCADE',
   });
 };
