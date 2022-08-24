@@ -4,7 +4,7 @@ import fs from 'fs';
 import s3service from '@/services/s3.service';
 import config from '../config';
 
-const DEFAULT_IMAGE_SIZE = 200;
+const DEFAULT_IMAGE_SIZE = 250;
 
 function resizeImage({
   sourcePath,
