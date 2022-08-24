@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Head from 'next/head';
+import Link from 'next/link';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import AuthenticatedRoute from '@/components/AuthenticatedRoute';
@@ -9,6 +10,7 @@ import Layout from '@/components/Layout';
 import ProductsList from '@/components/ProductsList';
 import { setUser } from '@/store/authSlice';
 import { getProductsList } from '@/utils/api';
+import { ROLE } from '@/utils/types';
 
 function Home({ user, products }) {
   const dispatch = useDispatch();
@@ -24,7 +26,23 @@ function Home({ user, products }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="text-center">
-        {/* TODO: Add merchandiser actions */}
+        {user?.role == ROLE.MERCHANDISER && (
+          <>
+            <div className="flex justify-end space-x-5">
+              <Link href="/product/add">
+                <a className="btn btn-sm rounded-xl btn-primary">
+                  Add New Product
+                </a>
+              </Link>
+              <Link href="/product/import">
+                <a className="btn btn-sm rounded-xl btn-primary">
+                  Import Products
+                </a>
+              </Link>
+            </div>
+            <div className="divider"></div>
+          </>
+        )}
         <ProductsList products={products} />
       </div>
     </div>

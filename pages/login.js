@@ -41,7 +41,7 @@ const Login = () => {
 
   return (
     <form
-      className="h-screen u-center flex flex-col items-center space-y-8"
+      className="flex flex-col items-center "
       onSubmit={handleSubmit(onSubmit)}
     >
       <Head>
@@ -70,7 +70,7 @@ const Login = () => {
         </label>
 
         <button
-          className="btn w-64 rounded-ful"
+          className="btn w-64 rounded-full btn-primary "
           type="submit"
           disabled={Object.keys(errors).length > 0 || isLoading}
         >

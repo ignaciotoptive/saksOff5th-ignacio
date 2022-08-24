@@ -31,7 +31,7 @@ export default class uploadImageService {
     return new Promise((resolve, reject) => {
       s3.upload(s3Params, (err, data) => {
         if (err) {
-          Logger.error(err);
+          console.error(err);
           reject(err);
         }
         resolve(data);

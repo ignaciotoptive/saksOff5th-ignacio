@@ -6,7 +6,7 @@ function Layout(Component) {
     return (
       <div className="webstore-layout">
         <Header />
-        <div className="webstore-content container mx-auto p-5 shadow-md rounded-xl">
+        <div className="webstore-content container mx-auto bg-base-200 my-10 p-5 shadow-md rounded-xl">
           <Component {...props} />
         </div>
       </div>

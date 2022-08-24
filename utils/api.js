@@ -33,5 +33,9 @@ export function getProductsList(req) {
     .then((res) => {
       const products = res.data.products;
       return products;
+    })
+    .catch((error) => {
+      console.log('getProductsList error', error.toString());
+      return [];
     });
 }
