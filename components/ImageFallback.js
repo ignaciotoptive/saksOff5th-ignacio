@@ -11,12 +11,6 @@ export default function ImageFallback({
     <img
       {...rest}
       src={src}
-      onLoadingComplete={(result) => {
-        if (result.naturalWidth === 0) {
-          // Broken image
-          setErrorLoading(true);
-        }
-      }}
       onError={() => {
         console.log('Load image error', src);
         setErrorLoading(true);
