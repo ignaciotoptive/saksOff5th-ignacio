@@ -22,17 +22,17 @@ const fieldsSpec = [
   },
   {
     name: 'inventory',
-    type: 'text',
+    type: 'number',
     options: { min: 0, max: 100 },
   },
   {
     name: 'shipmentDaysMin',
-    type: 'text',
+    type: 'number',
     options: { min: 0, max: 100 },
   },
   {
     name: 'shipmentDaysMax',
-    type: 'text',
+    type: 'number',
     options: { min: 0, max: 100 },
   },
   {
@@ -105,10 +105,11 @@ function AddProduct() {
             <div key={field.name} className="grid grid-cols-2">
               <label>{field.label || startCase(field.name)}</label>
               <input
-                className={
-                  'input input-bordered w-full max-w-md' +
-                  (field.type == 'checkbox' ? ' checkbox-sm' : '')
-                }
+                className={[
+                  'input input-bordered w-full max-w-md',
+                  field.type == 'checkbox' ? 'checkbox-sm' : '',
+                  !!errors[field.name] ? 'input-error' : '',
+                ].join(' ')}
                 type={field.type}
                 {...(field.type == 'file' && { accept: 'image/*' })}
                 {...register(field.name, field.options)}
