@@ -26,7 +26,6 @@ services:
       - 3307:3306
     volumes:
       - ./.db_data:/var/lib/mysql
-      # - ./db_scripts:/docker-entrypoint-initdb.d:ro
     environment:
       MYSQL_DATABASE: 'webstore'
       MYSQL_ROOT_PASSWORD: 'root'
@@ -34,17 +33,18 @@ services:
       - webstore-network
 
   localstack:
-    image: localstack/localstack:latest
+    # NOTE: Persistance is not available after version 0.13:https://docs.localstack.cloud/localstack/persistence-mechanism/
+    image: localstack/localstack:0.13.1
     environment:
       - AWS_DEFAULT_REGION=us-east-1
       - EDGE_PORT=4566
       - SERVICES=lambda,s3
       - DATA_DIR=${LOCALSTACK_DATA_DIR:-/tmp/localstack/data}
-      - PERSISTENCE=1
+      - LEGACY_PERSISTENCE=1
     ports:
       - '4566-4583:4566-4583'
     volumes:
-      - './.localstack:/var/lib/localstack'
+      - './.localstack:/tmp/localstack'
       - '/var/run/docker.sock:/var/run/docker.sock'
     networks:
       - webstore-network
