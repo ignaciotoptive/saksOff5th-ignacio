@@ -1,13 +1,29 @@
+import map from 'lodash/map';
+import startCase from 'lodash/startCase';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import AuthenticatedRoute from '@/components/AuthenticatedRoute';
 import { userFromRequest } from '@/utils/auth';
 import Layout from '@/components/Layout';
 import ProductsList from '@/components/ProductsList';
 import { getProductsList } from '@/utils/api';
 import { ROLE } from '@/utils/types';
+import { CATEGORY } from '@/utils/types';
+
+const categoriesOptions = ['all', ...map(CATEGORY)];
 
 function Home({ user, products }) {
+  const router = useRouter();
+
+  const onSelectCategory = (event) => {
+    const selectedValue = event.target.value;
+    router.push({
+      pathname: '/',
+      query: CATEGORY[selectedValue] ? { category: selectedValue } : {},
+    });
+  };
+
   return (
     <div>
       <Head>
@@ -16,9 +32,9 @@ function Home({ user, products }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="text-center">
-        {user?.role == ROLE.MERCHANDISER && (
-          <>
-            <div className="flex justify-end space-x-5">
+        <div className="flex items-center justify-end space-x-5">
+          {user?.role == ROLE.MERCHANDISER ? (
+            <>
               <Link href="/product/add">
                 <a className="btn btn-sm rounded-xl btn-primary">
                   Add New Product
@@ -29,10 +45,24 @@ function Home({ user, products }) {
                   Import Products
                 </a>
               </Link>
-            </div>
-            <div className="divider"></div>
-          </>
-        )}
+            </>
+          ) : (
+            <>
+              <span className="font-bold">Select Category:</span>
+              <select
+                className="select sm:w-full max-w-xs"
+                onChange={onSelectCategory}
+              >
+                {map(categoriesOptions, (category) => (
+                  <option key={category} value={category}>
+                    {startCase(category)}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
+        </div>
+        <div className="divider"></div>
         <ProductsList products={products} />
       </div>
     </div>
@@ -43,7 +73,7 @@ export default AuthenticatedRoute(Layout(Home));
 
 export async function getServerSideProps(context) {
   const user = await userFromRequest(context.req);
-  const products = await getProductsList(context.req);
+  const products = await getProductsList(context.req, context.query);
 
   return {
     props: {
