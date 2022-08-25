@@ -3,6 +3,9 @@ const S3 = require('aws-sdk/clients/s3');
 
 const BUCKET_NAME_DEFAULT = 'webstore';
 
+const HOSTNAME_DEFAULT = 'localhost';
+const PORT_DEFAULT = '4566';
+
 const S3ConfigProvider = () => {
   const _bucketName = process.env.AWS_BUCKET_NAME ?? BUCKET_NAME_DEFAULT;
   // LocalStack instance should be running locally on port 4566
@@ -11,7 +14,9 @@ const S3ConfigProvider = () => {
   const _s3 = new S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? 'testAccessKey',
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? 'testSecretKey',
-    endpoint: process.env.DYNAMO_DB_END_POINT ?? 'http://localhost:4566',
+    endpoint: `http://${process.env.LOCALSTACK_HOST ?? HOSTNAME_DEFAULT}:${
+      process.env.LOCALSTACK_PORT ?? PORT_DEFAULT
+    }`,
     s3ForcePathStyle: true,
     region: process.env.AWS_REGION ?? 'us-east-1',
     logger: console,
@@ -36,6 +41,8 @@ const S3ConfigProvider = () => {
   };
 
   return {
+    HOSTNAME_DEFAULT,
+    PORT_DEFAULT,
     getS3,
     getBucketName,
     createBucket,

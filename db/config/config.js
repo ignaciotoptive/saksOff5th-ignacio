@@ -7,6 +7,9 @@ module.exports = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: 'mysql',
+    // Use a different storage. Default: none.
+    // Save the successful seeders in database
+    seederStorage: 'sequelize',
   },
   test: {
     username: 'root',

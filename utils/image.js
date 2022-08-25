@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import fs from 'fs';
 import s3service from '@/services/s3.service';
 import config from '../config';
+import S3ConfigProvider from 's3/S3ConfigProvider';
 
 const DEFAULT_IMAGE_SIZE = 250;
 
@@ -51,7 +52,12 @@ function storeImage({ imageFile }) {
           buffer: newFile,
           originalName: imageFileName,
         });
-        const url = uploadedImage.Location;
+        // replace internal hostname for localstack, e.g. http://localstack:4566
+        // which is not accesible from outside docker with localhost address
+        const url = uploadedImage.Location.replace(
+          process.env.LOCALSTACK_HOST,
+          S3ConfigProvider().HOSTNAME_DEFAULT
+        );
         return resolve({
           url,
           width: DEFAULT_IMAGE_SIZE,

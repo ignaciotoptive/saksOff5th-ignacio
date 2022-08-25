@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate": "sequelize-cli db:migrate",
-    "rollback": "sequelize-cli db:migrate:undo:all",
-    "seed": "sequelize-cli db:seed:all"
+    "migrate": "sequelize db:migrate",
+    "rollback": "sequelize db:migrate:undo:all",
+    "seed": "sequelize db:seed:all"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
@@ -40,6 +40,7 @@
     "eslint": "8.22.0",
     "eslint-config-next": "12.2.5",
     "postcss": "^8.4.16",
+    "sequelize-cli": "6.3.0",
     "tailwindcss": "^3.1.8"
   }
 }
