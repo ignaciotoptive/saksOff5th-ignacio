@@ -129,28 +129,34 @@ const handler = nc({
       return res.status(400).send('Invalid SKU or price');
     }
     const isActive = isActive_ == 'on' || isActive_;
-    const product = await db.Product.create({
-      SKU,
-      price,
-      inventory,
-      shipmentDaysMin,
-      shipmentDaysMax,
-      isActive,
-      category,
-    });
-    if (req.files && req.files.image) {
-      const { url, width, height } = await storeImage({
-        imageFile: req.files.image,
+    try {
+      const product = await db.Product.create({
+        SKU,
+        price,
+        inventory,
+        shipmentDaysMin,
+        shipmentDaysMax,
+        isActive,
+        category,
       });
-      const productId = product.id;
-      await db.Image.create({
-        url,
-        width,
-        height,
-        productId,
-      });
+      if (req.files && req.files.image) {
+        const { url, width, height } = await storeImage({
+          imageFile: req.files.image,
+        });
+        const productId = product.id;
+        await db.Image.create({
+          url,
+          width,
+          height,
+          productId,
+        });
+      }
+      return res.status(200).json({ product });
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ error: 'Invalid Product params', errors: error.errors });
     }
-    return res.status(200).json({ product });
   });
 
 export default handler;

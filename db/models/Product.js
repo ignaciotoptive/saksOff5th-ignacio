@@ -9,15 +9,31 @@ const Product = sequelize.define(
   {
     SKU: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
     price: {
       type: Sequelize.FLOAT,
+      validate: {
+        is: /^([0-9]*[.])?[0-9]+$/,
+      },
     },
     inventory: {
       type: Sequelize.INTEGER,
+      validate: {
+        min: 1,
+      },
     },
     shipmentDaysMin: {
       type: Sequelize.INTEGER,
+      validate: {
+        isLessThanShipmentDaysMax(value) {
+          if (parseInt(value) > parseInt(this.shipmentDaysMax)) {
+            throw new Error(
+              'shipmentDaysMin must be less or equal to shipmentDaysMax'
+            );
+          }
+        },
+      },
     },
     shipmentDaysMax: {
       type: Sequelize.INTEGER,
