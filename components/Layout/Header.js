@@ -37,16 +37,14 @@ function Header(props) {
           <a className="text-2xl font-bold text-accent">Webstore</a>
         </Link>
       </div>
-      <div className="flex-none">
-        {!!user && (
-          <>
-            {user.role === ROLE.CUSTOMER && <CartIcon />}
-            <button className="btn" onClick={onLogout}>
-              Logout
-            </button>
-          </>
-        )}
-      </div>
+      {!!user && (
+        <div className="flex-none space-x-5">
+          {user.role === ROLE.CUSTOMER && <CartIcon />}
+          <button className="btn" onClick={onLogout}>
+            Logout
+          </button>
+        </div>
+      )}
     </div>
   );
 }
