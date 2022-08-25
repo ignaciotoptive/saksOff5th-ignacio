@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import sumBy from 'lodash/sumBy';
+import Link from 'next/link';
 import { userFromRequest } from '@/utils/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectProducts, clearCart } from '@/store/cartSlice';
@@ -40,11 +41,7 @@ function Checkout({ user }) {
         <div className="space-y-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {products.map((product, idx) => (
-              <Product
-                product={product}
-                key={`${product.id}-${idx}`}
-                disableActions
-              />
+              <Product key={`${product.id}-${idx}`} product={product} />
             ))}
           </div>
           <div className="text-right text-3xl font-bold">
@@ -67,16 +64,21 @@ function Checkout({ user }) {
           </button>
         </div>
       ) : (
-        <p
-          className={[
-            'text-5xl font-bold my-[5em]',
-            orderCreated ? 'text-success' : '',
-          ].join(' ')}
-        >
-          {!orderCreated
-            ? 'Your cart is currently empty'
-            : 'Order was successfully created!'}
-        </p>
+        <div>
+          <p
+            className={[
+              'text-5xl font-bold my-[5em]',
+              orderCreated ? 'text-success' : '',
+            ].join(' ')}
+          >
+            {!orderCreated
+              ? 'Your cart is currently empty'
+              : 'Order was successfully created!'}
+          </p>
+          <Link href="/">
+            <button className="btn btn-primary btn-lg w-full">Go Home</button>
+          </Link>
+        </div>
       )}
     </div>
   );

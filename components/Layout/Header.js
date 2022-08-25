@@ -31,7 +31,7 @@ function Header(props) {
   };
 
   return (
-    <div className="bg-base-300 webstore-header navbar">
+    <div className="bg-base-300 webstore-header navbar sticky top-0 z-50">
       <div className="flex-1 mx-10">
         <Link href="/">
           <a className="text-2xl font-bold text-accent">Webstore</a>

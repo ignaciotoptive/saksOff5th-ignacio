@@ -1,14 +1,13 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectUser } from '@/store/authSlice';
-import { addProduct } from '@/store/cartSlice';
 import { ROLE } from '@/utils/types';
 import ImageFallback from '@/components/ImageFallback';
 
-function Product({ product, disableActions }) {
+function Product({ product, onAddToCart }) {
   const user = useSelector(selectUser);
   const image = product.Images.length ? product.Images[0] : {};
-  const dispatch = useDispatch();
+
   return (
     <div className="flex justify-center sm:py-4">
       <div className="card card-side card-compact w-full sm:flex-col bg-base-300 shadow-xl">
@@ -32,12 +31,12 @@ function Product({ product, disableActions }) {
           <div className="card-actions justify-end">
             <div className="badge badge-outline">{product.category}</div>
           </div>
-          {!disableActions && user?.role === ROLE.CUSTOMER && (
+          {!!onAddToCart && user?.role === ROLE.CUSTOMER && (
             <div className="card-actions justify-end">
               <button
                 className="btn btn-sm rounded-xl btn-primary"
                 onClick={() => {
-                  dispatch(addProduct(product));
+                  onAddToCart(product);
                 }}
               >
                 Add to Cart
