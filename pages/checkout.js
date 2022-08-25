@@ -4,7 +4,7 @@ import sumBy from 'lodash/sumBy';
 import Link from 'next/link';
 import { userFromRequest } from '@/utils/auth';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, clearCart } from '@/store/cartSlice';
+import { selectProducts, removeProduct, clearCart } from '@/store/cartSlice';
 import Product from '@/components/Product';
 import Layout from '@/components/Layout';
 
@@ -41,7 +41,11 @@ function Checkout({ user }) {
         <div className="space-y-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {products.map((product, idx) => (
-              <Product key={`${product.id}-${idx}`} product={product} />
+              <Product
+                key={`${product.id}-${idx}`}
+                product={product}
+                onRemoveFromCart={(product) => dispatch(removeProduct(product))}
+              />
             ))}
           </div>
           <div className="text-right text-3xl font-bold">

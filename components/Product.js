@@ -4,7 +4,7 @@ import { selectUser } from '@/store/authSlice';
 import { ROLE } from '@/utils/types';
 import ImageFallback from '@/components/ImageFallback';
 
-function Product({ product, onAddToCart }) {
+function Product({ product, onAddToCart, onRemoveFromCart }) {
   const user = useSelector(selectUser);
   const image = product.Images.length ? product.Images[0] : {};
 
@@ -40,6 +40,18 @@ function Product({ product, onAddToCart }) {
                 }}
               >
                 Add to Cart
+              </button>
+            </div>
+          )}
+          {!!onRemoveFromCart && user?.role === ROLE.CUSTOMER && (
+            <div className="card-actions justify-end">
+              <button
+                className="btn btn-sm rounded-xl"
+                onClick={() => {
+                  onRemoveFromCart(product);
+                }}
+              >
+                Remove
               </button>
             </div>
           )}
