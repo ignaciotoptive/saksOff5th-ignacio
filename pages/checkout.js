@@ -71,7 +71,7 @@ function Checkout({ user }) {
         <div>
           <p
             className={[
-              'text-5xl font-bold my-[5em]',
+              'text-5xl font-bold my-[4em] sm:my-[7em]',
               orderCreated ? 'text-success' : '',
             ].join(' ')}
           >

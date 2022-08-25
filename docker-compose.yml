@@ -36,6 +36,7 @@ services:
     # NOTE: Persistance is not available after version 0.13:https://docs.localstack.cloud/localstack/persistence-mechanism/
     image: localstack/localstack:0.13.1
     environment:
+      - EXTRA_CORS_ALLOWED_ORIGINS=*
       - AWS_DEFAULT_REGION=us-east-1
       - EDGE_PORT=4566
       - SERVICES=lambda,s3

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function ImageFallback({
   src,
@@ -6,13 +6,17 @@ export default function ImageFallback({
   ...rest
 }) {
   const [errorLoading, setErrorLoading] = useState(false);
+  const [srcUrl, setSrcUrl] = useState(null);
 
-  return !!src && !errorLoading ? (
+  useEffect(() => {
+    if (!!src) setSrcUrl(src.replace('localhost', window.location.hostname));
+  }, [src]);
+
+  return !!srcUrl && !errorLoading ? (
     <img
       {...rest}
-      src={src}
+      src={srcUrl}
       onError={() => {
-        console.log('Load image error', src);
         setErrorLoading(true);
       }}
     />
